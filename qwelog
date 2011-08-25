@@ -2,7 +2,7 @@
 # Copyright 2011 Dafydd Crosby
 
 """
-simplog - the personal log so simple, you'll use it
+qwelog - the personal log so simple, you'll use it
 -h, --help	show options
 -f, --file	change which file to write to
 """
@@ -10,7 +10,7 @@ simplog - the personal log so simple, you'll use it
 from Tkinter import Tk, Entry, Button, Frame
 import os, sys, getopt
 
-class SimplogDialog():
+class QwelogDialog():
     def __init__(self, parent):
         self.top = Frame(parent)
         self.top.pack()
@@ -44,7 +44,7 @@ def main():
         print(__doc__)
         sys.exit(2)
 
-    filepath = get_home_dir()+"/simplog.txt"
+    filepath = get_home_dir()+"/qwelog.txt"
     for o, a in opts:
         if o in ("-h", "--help"):
             print(__doc__)
@@ -60,8 +60,8 @@ def main():
 
     # Create dialog window
     root = Tk()
-    root.title("simplog")
-    thing = SimplogDialog(root)
+    root.title("qwelog")
+    thing = QwelogDialog(root)
     root.wait_window(thing.top)
 
     # Make sure there is something to write
