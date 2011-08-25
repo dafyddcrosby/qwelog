@@ -1,0 +1,70 @@
+#!/usr/bin/env python
+# Copyright 2011 Dafydd Crosby
+"""
+simplog - the personal log so simple, you'll use it
+-h, --help	show options
+-f, --file	change which file to write to
+"""
+
+from Tkinter import Tk, Entry, Button, Frame
+import os, sys, getopt
+
+class simplog():
+    def __init__(self, parent):
+        self.top = Frame(parent)
+        self.top.pack()
+        
+	self.thing = ""
+	
+	self.entry = Entry(self.top)
+        self.entry.focus()
+        self.entry.bind("<Return>", self.add_thing)
+        self.entry.pack()
+ 
+        button = Button(self.top, text="Add thing", command=self.add_thing)
+        button.bind("<Return>", self.add_thing)
+        button.pack()
+
+    def add_thing(self, event=""):
+        self.thing = self.entry.get()
+        self.top.destroy()
+
+def get_home_dir():
+    """
+    I broke this out just in case this gets ported to a non-Linux system
+    """
+    return os.environ['HOME']
+
+def main():
+    try:
+	    opts, args = getopt.getopt(sys.argv[1:], 'hf:', ['--help', '--file='])
+    except getopt.GetoptError, err:
+	print(err)
+	print(__doc__)
+	sys.exit(2)
+
+    filepath = get_home_dir()+"/simplog.txt"
+    for o, a in opts:
+        if o in ("-h", "--help"):
+            print(__doc__)
+	    sys.exit(0)
+	elif o in ("-f", "--file="):
+            filepath = a
+
+    try:
+        log = open(filepath, "a")
+    except IOError, err:
+        print(err)
+	sys.exit(1)
+
+    root = Tk()
+    root.title("simplog")
+    thing = simplog(root)
+    root.wait_window(thing.top)
+
+    if thing.thing:
+        log.write(thing.thing + "\n")
+    log.close()
+
+if __name__ == "__main__":
+    main()
