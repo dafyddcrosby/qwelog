@@ -1,2 +1,2 @@
-qwelog:
+install:
 	cp qwelog /usr/bin/
