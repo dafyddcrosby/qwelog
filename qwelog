@@ -9,6 +9,7 @@ qwelog - the personal log so simple, you'll use it
 
 from Tkinter import Tk, Entry, Button, Frame
 import os, sys, getopt
+from datetime import datetime
 
 class QwelogDialog():
     def __init__(self, parent):
@@ -66,7 +67,8 @@ def main():
 
     # Make sure there is something to write
     if thing.thing:
-        log.write(thing.thing + "\n")
+        timestamp = datetime.now()
+        log.write(timestamp.strftime("%Y-%m-%d-%H:%M ") + thing.thing + "\n")
 
     log.close()
 
